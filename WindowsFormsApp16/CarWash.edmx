@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище carwashModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Box">
+          <Key>
+            <PropertyRef Name="Number_Box" />
+            <PropertyRef Name="Date_Time" />
+          </Key>
+          <Property Name="Number_Box" Type="int" Nullable="false" />
+          <Property Name="Date_Time" Type="smalldatetime" Nullable="false" />
+          <Property Name="Id_Customer" Type="int" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sum_All" Type="money" />
+          <Property Name="Value" Type="smallint" />
+        </EntityType>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number_Box" Type="int" Nullable="false" />
+          <Property Name="Data_Time_Box" Type="smalldatetime" Nullable="false" />
+          <Property Name="FK_Service" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="bigint" Nullable="false" />
+          <Property Name="BDay" Type="date" />
+          <Property Name="Total" Type="money" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Service_Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <Association Name="FK__Box__Id_Customer__48CFD27E">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Box" Type="Self.Box" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Box">
+              <PropertyRef Name="Id_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__4AB81AF0">
+          <End Role="Box" Type="Self.Box" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Box">
+              <PropertyRef Name="Number_Box" />
+              <PropertyRef Name="Date_Time" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="Number_Box" />
+              <PropertyRef Name="Data_Time_Box" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__FK_Serv__49C3F6B7">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="FK_Service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profile__Id__47DBAE45">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище carwashModelContainer">
+          <EntitySet Name="Box" EntityType="Self.Box" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="history" EntityType="Self.history" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Box__Id_Customer__48CFD27E" Association="Self.FK__Box__Id_Customer__48CFD27E">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Box" EntitySet="Box" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__4AB81AF0" Association="Self.FK__history__4AB81AF0">
+            <End Role="Box" EntitySet="Box" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__FK_Serv__49C3F6B7" Association="Self.FK__history__FK_Serv__49C3F6B7">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profile__Id__47DBAE45" Association="Self.FK__Profile__Id__47DBAE45">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="carwashModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Box">
+          <Key>
+            <PropertyRef Name="Number_Box" />
+            <PropertyRef Name="Date_Time" />
+          </Key>
+          <Property Name="Number_Box" Type="Int32" Nullable="false" />
+          <Property Name="Date_Time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_Customer" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Box__Id_Customer__48CFD27E" FromRole="Box" ToRole="Customer" />
+          <NavigationProperty Name="history" Relationship="Self.FK__history__4AB81AF0" FromRole="Box" ToRole="history" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Box" Relationship="Self.FK__Box__Id_Customer__48CFD27E" FromRole="Customer" ToRole="Box" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__Profile__Id__47DBAE45" FromRole="Customer" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sum_All" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Value" Type="Int16" />
+        </EntityType>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number_Box" Type="Int32" Nullable="false" />
+          <Property Name="Data_Time_Box" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FK_Service" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Box" Relationship="Self.FK__history__4AB81AF0" FromRole="history" ToRole="Box" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__history__FK_Serv__49C3F6B7" FromRole="history" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FIO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="Int64" Nullable="false" />
+          <Property Name="BDay" Type="DateTime" Precision="0" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Profile__Id__47DBAE45" FromRole="Profile" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Service_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="history" Relationship="Self.FK__history__FK_Serv__49C3F6B7" FromRole="Service" ToRole="history" />
+        </EntityType>
+        <Association Name="FK__Box__Id_Customer__48CFD27E">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Box" Type="Self.Box" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Box">
+              <PropertyRef Name="Id_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__4AB81AF0">
+          <End Role="Box" Type="Self.Box" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Box">
+              <PropertyRef Name="Number_Box" />
+              <PropertyRef Name="Date_Time" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="Number_Box" />
+              <PropertyRef Name="Data_Time_Box" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profile__Id__47DBAE45">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__FK_Serv__49C3F6B7">
+          <End Role="Service" Type="Self.Service" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="FK_Service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Connection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Box" EntityType="Self.Box" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" />
+          <EntitySet Name="history" EntityType="Self.history" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" />
+          <EntitySet Name="Service" EntityType="Self.Service" />
+          <AssociationSet Name="FK__Box__Id_Customer__48CFD27E" Association="Self.FK__Box__Id_Customer__48CFD27E">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Box" EntitySet="Box" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__4AB81AF0" Association="Self.FK__history__4AB81AF0">
+            <End Role="Box" EntitySet="Box" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profile__Id__47DBAE45" Association="Self.FK__Profile__Id__47DBAE45">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__FK_Serv__49C3F6B7" Association="Self.FK__history__FK_Serv__49C3F6B7">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище carwashModelContainer" CdmEntityContainer="Connection">
+          <EntitySetMapping Name="Box">
+            <EntityTypeMapping TypeName="carwashModel.Box">
+              <MappingFragment StoreEntitySet="Box">
+                <ScalarProperty Name="Number_Box" ColumnName="Number_Box" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+                <ScalarProperty Name="Id_Customer" ColumnName="Id_Customer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="carwashModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discount">
+            <EntityTypeMapping TypeName="carwashModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sum_All" ColumnName="Sum_All" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="history">
+            <EntityTypeMapping TypeName="carwashModel.history">
+              <MappingFragment StoreEntitySet="history">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Number_Box" ColumnName="Number_Box" />
+                <ScalarProperty Name="Data_Time_Box" ColumnName="Data_Time_Box" />
+                <ScalarProperty Name="FK_Service" ColumnName="FK_Service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile">
+            <EntityTypeMapping TypeName="carwashModel.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="BDay" ColumnName="BDay" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Service">
+            <EntityTypeMapping TypeName="carwashModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Service_Name" ColumnName="Service_Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

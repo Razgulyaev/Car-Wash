@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="da608d739d8f48b8bcf5eb8e301a7ece" Name="Diagram1">
+        <EntityTypeShape EntityType="carwashModel.Box" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.Customer" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.Discount" Width="1.5" PointX="5.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.history" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.Profile" Width="1.5" PointX="3.5" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="carwashModel.Service" Width="1.5" PointX="7.25" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="carwashModel.FK__Box__Id_Customer__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__history__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__Profile__Id__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="carwashModel.FK__history__FK_Serv__49C3F6B7" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
